@@ -17,7 +17,7 @@
 import Checkbox from 'primevue/checkbox';
 import FieldContainer from './SimpleFieldContainer.vue'
 
-const modelValue = defineModel<{modelValue?:boolean}>()
+const modelValue = defineModel<boolean>()
 const props = defineProps<{
     label?:string,    
     description?:string,

@@ -17,7 +17,7 @@
 import InputSwitch from 'primevue/inputswitch';
 import FieldContainer from './SimpleFieldContainer.vue'
 
-const modelValue = defineModel<{modelValue?:boolean|undefined}>()
+const modelValue = defineModel<boolean>()
 const props = defineProps<{
     label?:string,
     id?:string,

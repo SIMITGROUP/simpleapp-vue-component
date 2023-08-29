@@ -148,8 +148,8 @@ import SimpleAppSelect from './components/SimpleAppSelect.vue'
 import SimpleAppSelectmulti from './components/SimpleAppSelectmulti.vue'
 import SimpleAppList from './components/SimpleAppList.vue'
 import SimpleAppListmulti from './components/SimpleAppListmulti.vue'
-import type {ListOptionType} from './type'
-import "select2-component/dist/select2.css";
+
+
 const errmsg = ref<any>()
 const msg = ref<any>()
 const person = new PersonDoc()

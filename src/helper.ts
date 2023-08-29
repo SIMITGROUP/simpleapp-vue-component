@@ -1,7 +1,10 @@
 import type { JSONSchema7,JSONSchema7Definition } from 'json-schema';
 import type {ListOptionType} from './type'
-export const prepareList=(schemaComposition:string,fieldsetting:JSONSchema7Definition | JSONSchema7Definition[] | undefined,labelfield:string,valuefield:string,propsoptions?:any[],):ListOptionType[]=>{
+export const prepareList=(schemaComposition:string,fsetting:JSONSchema7Definition | JSONSchema7Definition[] | undefined,labelfield:string,valuefield:string,propsoptions?:any[],):ListOptionType[]=>{
     let options :ListOptionType[] = []
+    let fieldsetting:JSONSchema7 = {} as JSONSchema7
+    Object.assign(fieldsetting,fsetting)
+    // {...fsetting} as   JSONSchema7
     try{
         const convertToList=(list:any[]):ListOptionType[]=>{
             let opts :ListOptionType[] = []

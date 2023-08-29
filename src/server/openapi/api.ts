@@ -37,6 +37,11 @@ export interface PersonSalesAgent{
   id:string
   name:string
 }
+export type PersonKids={
+  ic:string
+  name: string
+
+}
 /**
  *
  * @export
@@ -67,7 +72,7 @@ export interface Person {
   languages:Array<string>;  
   description:string;
   salesagent:PersonSalesAgent;
-
+  kids:Array<PersonKids>
   /**
    *
    * @type {PersonName}
