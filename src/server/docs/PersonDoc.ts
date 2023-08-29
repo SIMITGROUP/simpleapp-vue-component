@@ -4,7 +4,7 @@
  * and regenerate this file.
  */
 
-import {SimpleAppClient} from '@simitgroup/simpleapp-doc-client'
+import {SimpleAppClient} from '../../SimpleAppClient'
 // import { JSONSchema7 } from 'json-schema';
 import { Configuration, PERSONApi } from '../openapi';
 import type { Person, PersonName } from '../openapi';

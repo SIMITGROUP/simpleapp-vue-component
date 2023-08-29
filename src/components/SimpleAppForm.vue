@@ -4,7 +4,7 @@
 </template>
 <script setup lang="ts" >
 import type {SimpleAppFieldSetting} from '../type'    
-import {SimpleAppClient} from '@simitgroup/simpleapp-doc-client'
+import {SimpleAppClient} from '../SimpleAppClient'
 import type { JSONSchema7,JSONSchema7Definition } from 'json-schema';
 
     const props = defineProps<{
