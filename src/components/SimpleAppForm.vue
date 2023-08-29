@@ -1,16 +1,15 @@
 <template>
     <slot name="header"><h3>{{ title }}</h3></slot>
-    <slot  name="default" :getField="getField"></slot>
+    <slot  name="default" :data="document.getData()" :getField="getField"></slot>
 </template>
-<script setup lang="ts">
-import {computed,watch,ref} from 'vue'
-import {SimpleAppClient} from '@simitgroup/simpleapp-client'
+<script setup lang="ts" >
+import type {SimpleAppFieldSetting} from '../type'    
+import {SimpleAppClient} from '@simitgroup/simpleapp-doc-client'
+import type { JSONSchema7,JSONSchema7Definition } from 'json-schema';
 
     const props = defineProps<{
         title?:string,
-        schema:any,
-        data:any,
-        document:SimpleAppClient<any,any>
+        document: SimpleAppClient<any,any>
     }>()
     // const obj = {schema:props.schema,data: props.schema}
     const getField = (path:string)=>{
@@ -20,28 +19,35 @@ import {SimpleAppClient} from '@simitgroup/simpleapp-client'
         const fieldsetting = getPathObject(schema,path)
         // console.log("setting",fieldsetting)
         
+        
         return {
             path: path,
             instancepath: getInstancePath(schema,path),
             fieldsetting: fieldsetting,
             modelObject: data,
+            apiObj:props.document.getApi(),
             modelField: 'email',
             isrequired: getIsRequired(schema,path),
             errors: props.document.getErrors()
-        }
+        } as SimpleAppFieldSetting
     }
-//    "schemaPath": "#/properties/email/format",
+
+    //    "schemaPath": "#/properties/email/format",
 
     const getModelValue=(data:any,path:string)=>{
 
     }
     const getIsRequired=(schema:any,path:string)=>{
-        let paths = path.replace('#/','').split('/')
-        const fieldname = paths[paths.length-1]
-        paths = paths.slice(0, -2);    
-        let tmp = schema
+        if(!path){
+            console.error('unknown path')
+            return 'xx'
+        }
 
         try{
+            let paths = path.replace('#/','').split('/')
+            const fieldname = paths[paths.length-1]
+            paths = paths.slice(0, -2);    
+            let tmp = schema
             for(let i=0;i<paths.length;i++){
                 tmp = tmp[paths[i]]
                 
@@ -61,10 +67,14 @@ import {SimpleAppClient} from '@simitgroup/simpleapp-client'
         }
     }
    const getInstancePath=(schema:any,path:string)=>{
-    let paths = path.replace('#/','').split('/')    
-    let tmp = schema
-    let instancepath=''
+    if(!path){
+        console.error('unknown path')
+        return 'yy'
+    }
     try{
+        let paths = path.replace('#/','').split('/')    
+        let tmp = schema
+        let instancepath=''
         for(let i=0;i<paths.length;i++){
             tmp = tmp[paths[i]]
             if(tmp['type'] && paths[i] !='items'){
@@ -83,20 +93,31 @@ import {SimpleAppClient} from '@simitgroup/simpleapp-client'
     // let paths = path.replace('#/','').split('/')    
     // return '/'+paths[1]
    }
-   const getPathObject=(schema:any,path:string)=>{
-    let paths = path.replace('#/','').split('/')    
-    let tmp = schema
+   const getPathObject=(schema:JSONSchema7,path:string):JSONSchema7|undefined=>{
     // console.log("path",path)
+    if(!path){
+        console.error('unknown path')
+        return undefined
+    }
     try{
+        let paths:string[] = path.replace('#/','').split('/')    
+        let tmp :JSONSchema7Definition= schema
+        // console.log(path)
         for(let i=0;i<paths.length;i++){
-            tmp = tmp[paths[i]]
-            // console.log(i,tmp)
+            
+            //silly code, but it seems require to avoid typescript complaint.
+            //ultimately it is to obtain result as "tmp=tmp[path[i]]"
+            const key1 = paths[i] as keyof JSONSchema7
+            let jsonkey: keyof JSONSchema7 = key1
+            let obj:JSONSchema7 = {} as JSONSchema7
+            Object.assign(obj,tmp[jsonkey])
+            tmp = {...obj}            
         }
         // console.log('final ',path,tmp)
-
         return tmp
     }catch(err:any){
         console.error(err.message)
+        
     }    
    }
 </script>

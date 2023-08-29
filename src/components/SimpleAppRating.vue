@@ -1,30 +1,41 @@
 
 <template>
     <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
-        <Textarea
+        <Rating
             class="simpleapp-inputfield"
-            :id="slotprops.uuid"
+            :inputId="slotprops.uuid"
             v-model="modelValue" 
             v-bind="$attrs"
-            :autoResize="autoResize"
             :path="setting.instancepath"
-         ></Textarea>         
+         ></Rating>         
     </FieldContainer>
 </template>
 <script lang="ts" setup>
 import {computed,watch,ref} from 'vue'
-import Textarea from 'primevue/textarea';
+import Rating from 'primevue/rating';
 
 import FieldContainer from './SimpleFieldContainer.vue'
 const modelValue = defineModel()
 const props = defineProps<{
     label?:string,
-    id?:string,
     description?:string,
     error?:string,
     setting:any,
-    autoResize?:boolean,
     instancepath?:string,
 }>()
 
+// const modelValue = defineModel<{modelValue?:string}>()
+// console.log(modelValue.value)
+
+
+// const emits = defineEmits(['update:modelValue'])
+// const onchange=(e:any)=>{    
+//     emits('update:modelValue',e.target.value)
+// }
+
+
+// watch(props ,(after,before)=>{
+//     // console.log("B4",before,"after",after)
+//     inputvalue.value=after.modelValue
+// })
 </script>

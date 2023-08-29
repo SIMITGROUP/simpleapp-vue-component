@@ -1,0 +1,23 @@
+.simpleapp-input-container >label{
+    display: block;
+    
+}
+
+.simpleapp-inputfield,
+.simpleapp-inputfield input
+ {        
+    /* display: block; */
+    min-height: 1rem;
+    width: 100%;
+}
+
+/* only for number */
+.simpleapp-inputfield >input[type=number] {
+    border: none;
+}
+
+
+
+.input-error{
+    color: red;
+}

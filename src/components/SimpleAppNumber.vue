@@ -1,10 +1,9 @@
 
 <template>
-    <FieldContainer :refto="id" :label="label" :description="description"  :setting="setting" :instancepath="instancepath" :error="error">
-        <InputNumber class="input-component" :inputId="id"
-            v-model="inputvalue"    
-            @input="onInput"
-            @update:modelValue="inputvalue = $event"
+    <FieldContainer v-bind="$attrs" :label="label" :description="description"  :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">
+        <InputNumber class="simpleapp-inputfield" 
+            :inputId="slotprops.uuid"
+            v-model="modelValue"    
             :path="setting.instancepath"
             v-bind="$attrs"
          ></InputNumber>
@@ -16,20 +15,10 @@ import InputNumber from 'primevue/inputnumber';
 import FieldContainer from './SimpleFieldContainer.vue'
 const props = defineProps<{
     label?:string,
-    id?:string,
     description?:string,
-    modelValue?:number,
     setting:any
     error?:string,
     instancepath?:string,
 }>()
-const inputvalue = ref(props.modelValue)
-watch(props ,(after,before)=>{
-    inputvalue.value=after.modelValue
-})
-const emits = defineEmits(['update:modelValue'])
-const onInput=(e:any)=>{    
-    inputvalue.value=e.value
-    emits('update:modelValue',e.value)
-}
+const modelValue =defineModel()
 </script>

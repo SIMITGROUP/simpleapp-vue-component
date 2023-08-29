@@ -1,29 +1,29 @@
 
+
 <template>
     <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
-        <Textarea
-            class="simpleapp-inputfield"
-            :id="slotprops.uuid"
-            v-model="modelValue" 
+        <InputSwitch
+            class="simpleapp-inputswitch"
+            :inputId="slotprops.uuid"
+            v-model="modelValue"  
+            :binary="true"
             v-bind="$attrs"
-            :autoResize="autoResize"
             :path="setting.instancepath"
-         ></Textarea>         
+         ></InputSwitch>         
     </FieldContainer>
 </template>
 <script lang="ts" setup>
-import {computed,watch,ref} from 'vue'
-import Textarea from 'primevue/textarea';
-
+// import {Ref} from 'vue'
+import InputSwitch from 'primevue/inputswitch';
 import FieldContainer from './SimpleFieldContainer.vue'
-const modelValue = defineModel()
+
+const modelValue = defineModel<{modelValue?:boolean|undefined}>()
 const props = defineProps<{
     label?:string,
     id?:string,
     description?:string,
     error?:string,
     setting:any,
-    autoResize?:boolean,
     instancepath?:string,
 }>()
 

@@ -1,13 +1,14 @@
 <template>
-    <div v-if="schema" class="field-container flex-1">
-        <label :for="uuid">{{ fieldlabel }} <span v-if="props.setting.isrequired && fieldlabel" class="text-red-600">*</span></label>
+    <div v-if="schema" class="simpleapp-input-container">
+        <div v-if="hidelabel"></div>
+        <label v-else  :for="uuid">{{ fieldlabel }} <span v-if="props.setting.isrequired && fieldlabel" class="input-error">*</span></label>
         <slot name="default" :uuid="uuid"></slot>
         <small v-if="error" class="input-error">{{ error }}</small>
-        <small v-else >{{ fielddesc }}</small>
+        <small v-else class="input-desc">{{ fielddesc }}</small>
     </div>
-    <div v-else class="field-container flex-1">
-        <label class="text-red-600">wrong path in getField()</label>
-        <div class="text-red-600">{{ props.setting.path }}</div>
+    <div v-else class="simpleapp-input-container">
+        <label class="input-error">wrong path in getField()</label>
+        <div class="input-error">{{ props.setting.path }}</div>
     </div>
 </template>
 <script setup lang="ts">
@@ -19,10 +20,10 @@ const fieldlabel = ref('')
 const fielddesc = ref('')
 let instancepath = ref('')
 const props = defineProps<{
-    label?: string,
-    refto?: string,
+    label?: string,    
     description?: string,
     instancepath?:string,
+    hidelabel?:boolean,
     // error?:string,
     setting:any
 }>()
@@ -37,10 +38,12 @@ if(props.setting.fieldsetting && props.setting.fieldsetting.type){
     else if(props.setting?.instancepath) instancepath.value = props.setting.instancepath
     else instancepath.value='/unknown'
 
+    const fieldnamearr = instancepath.value.split('/')
+    const fieldname = camelCaseToWords(fieldnamearr[fieldnamearr.length-1])
 
     if(props.label)fieldlabel.value = props.label 
     else if (schema.title ) fieldlabel.value=schema.title
-    else fieldlabel.value=instancepath.value
+    else fieldlabel.value=fieldname
     
     if(props.description)fielddesc.value = props.description 
     else if (schema?.description != 'undefined') fielddesc.value=schema.description
@@ -49,6 +52,10 @@ if(props.setting.fieldsetting && props.setting.fieldsetting.type){
    
 
 }
+function camelCaseToWords(s: string) {
+  const result = s.replace(/([A-Z])/g, ' $1');
+  return result.charAt(0).toUpperCase() + result.slice(1);
+}
 const errormsg = computed(()=>{
     
     props.setting.errors[instancepath.value]
@@ -56,6 +63,7 @@ const errormsg = computed(()=>{
 const error = ref("")
 watch(props.setting.errors,(newvalue,oldvalue)=>{
     //it is array
+    error.value=''
     if(newvalue[instancepath.value]){
         const errlist:any[] = newvalue[instancepath.value]
         for(let i=0;i<errlist.length;i++){

@@ -1,6 +1,6 @@
 
 <template>
-    <FieldContainer :refto="id" :label="label" :description="description" :setting="setting" :error="error" :instancepath="instancepath" #default="slotprops">
+    <FieldContainer v-bind="$attrs" :refto="id" :label="label" :description="description" :setting="setting" :error="error" :instancepath="instancepath" #default="slotprops">
         <div class="value-container" :path="setting.instancepath">
             <slot>
                 {{ modelValue }}

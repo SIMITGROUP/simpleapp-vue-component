@@ -1,19 +1,20 @@
 
 <template>
     <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
-        <Textarea
+        <Editor
             class="simpleapp-inputfield"
-            :id="slotprops.uuid"
+            :inputId="slotprops.uuid"
             v-model="modelValue" 
             v-bind="$attrs"
             :autoResize="autoResize"
             :path="setting.instancepath"
-         ></Textarea>         
+         ></Editor>         
     </FieldContainer>
 </template>
 <script lang="ts" setup>
 import {computed,watch,ref} from 'vue'
-import Textarea from 'primevue/textarea';
+import Editor from 'primevue/editor';
+
 
 import FieldContainer from './SimpleFieldContainer.vue'
 const modelValue = defineModel()

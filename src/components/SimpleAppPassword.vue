@@ -1,34 +1,41 @@
+
 <template>
-    <FieldContainer :refto="id" :label="label" :description="description" :schema="schema" :error="error">
-       <InputText class="input-component" 
-            v-model="inputvalue"    
-            @input="onchange"           
+    <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
+        <Password
+            class="simpleapp-inputfield"
+            :inputId="slotprops.uuid"   
+            v-model="modelValue" 
             v-bind="$attrs"
-         ></InputText>         
+            :path="setting.instancepath"
+         ></Password>         
     </FieldContainer>
 </template>
 <script lang="ts" setup>
 import {computed,watch,ref} from 'vue'
-import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
 import FieldContainer from './SimpleFieldContainer.vue'
+const modelValue = defineModel()
 const props = defineProps<{
     label?:string,
     id?:string,
     description?:string,
-    modelValue?:string,
     error?:string,
-    setting:any
+    setting:any,
+    instancepath?:string,
 }>()
-const inputvalue = ref(props.modelValue)
-const schema = ref(props.setting)
-const label = props.setting.path
 
-const emits = defineEmits(['update:modelValue'])
-const onchange=(e:any)=>{    
-    emits('update:modelValue',e.target.value)
-}
+// const modelValue = defineModel<{modelValue?:string}>()
+// console.log(modelValue.value)
 
-watch(props ,(after,before)=>{
-    inputvalue.value=after.modelValue
-})
+
+// const emits = defineEmits(['update:modelValue'])
+// const onchange=(e:any)=>{    
+//     emits('update:modelValue',e.target.value)
+// }
+
+
+// watch(props ,(after,before)=>{
+//     // console.log("B4",before,"after",after)
+//     inputvalue.value=after.modelValue
+// })
 </script>

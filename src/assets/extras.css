@@ -1,0 +1,43 @@
+body{
+    font-size: x-large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+input{
+    font-size: x-large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.simpleapp-input-container{
+  
+    width: 30vw;
+}
+.input-desc{
+    font-size: small;
+    color:gray;    
+    display: block;
+    text-align: center;
+}
+.simpleapp-inputradio {
+    display: inline;
+}
+.simpleapp-inputradio >label{    
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+.simpleapp-inputfield{
+    width:100%
+}
+.fieldblock{
+    border: dashed 2px #000;
+}
+
+.person-result{
+    position: fixed;
+    right: 0;
+    background: beige;
+    border: dashed 1px #666;
+    font-size: medium;
+    top: 0;
+}
+.special-comment{
+    color: green;
+}
