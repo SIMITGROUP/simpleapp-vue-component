@@ -1,7 +1,7 @@
 {
   "name": "@simitgroup/simpleapp-vue-component",
-  "version": "1.0.16",
-  "private": true,
+  "version": "1.0.17",
+  "private": false,
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@simitgroup/simpleapp-doc-client": "^1.0.1",
+    "@simitgroup/simpleapp-doc-client": "^1.0.2",
     "ajv": "^8.12.0",
     "ajv-formats": "^2.1.1",
     "axios": "^1.4.0",
