@@ -108,9 +108,14 @@
             
                    
         </div>
-        
+        <div >   
+            <button @click="person.addEmptyAddress">Add Address</button>         
+            <SimpleAppDatatable @row-dblclick="editRow"  v-model="data.addresses" :setting="o.getField(fAddress)" :columns="['stid','postcode','street']"/>
+        </div>
         </SimpleAppForm>
+        
     </div>
+    
     <div class="person-result">
         <h3>simpleapp data</h3>
             <pre>{{data}}</pre>
@@ -148,6 +153,7 @@ import SimpleAppSelect from './components/SimpleAppSelect.vue'
 import SimpleAppSelectmulti from './components/SimpleAppSelectmulti.vue'
 import SimpleAppList from './components/SimpleAppList.vue'
 import SimpleAppListmulti from './components/SimpleAppListmulti.vue'
+import SimpleAppDatatable from './components/SimpleAppDatatable.vue'
 
 
 const errmsg = ref<any>()
@@ -174,7 +180,7 @@ const fPassword = '#/properties/password'
 const fLanguages='#/properties/languages'
 const fSalesAgent ='#/properties/salesagent'
 const fKids='#/properties/kids'
-
+const fAddress='#/properties/addresses'
 const genderlist = ["","M","F","Others"]
 // const bloodlist = ["","A","B","AB","O","Others"]
 const customsubscribelist = [
@@ -186,7 +192,9 @@ const customsubscribelist = [
     {value:'Others',label:'Others'},
 ]
 // :options="[{value:1,label:'hi'},{value:2,label:'ok'},{value:3,label:'no'}]"   optionValue="value" optionLabel="label"
-
+const editRow=(event:any)=>{
+    console.log(event.data,event.index)
+}
 const create=()=>{
     console.log("Create")
     person.create().then((res)=>{
