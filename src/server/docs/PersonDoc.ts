@@ -98,7 +98,7 @@ export class PersonDoc extends SimpleAppClient<Person, PERSONApi> {
       hobbies: ['hihi','bobo'], //typeof field == array
       salary: 2400.00,
       addresses: [], //typeof field == array
-      salesagent:{id:'sa-1',name:'salesman 1'},
+      salesagent:{},
       kids:[{ic:"99-00",name:"ali"},{ic:"55-88",name:"baba"}],
       password:'',
       _id: '',

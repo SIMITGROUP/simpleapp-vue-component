@@ -83,6 +83,9 @@ export class SimpleAppClient<
   validateFailed() {
     const ajv = new Ajv({ allErrors: true });
     addFormats(ajv);
+    ajv.addFormat('field-autocomplete-code', /.*$/)
+    ajv.addFormat('field-autocomplete-name', /.*$/)
+
     this.errorlist.value = {};
     this.hook('pre-validation', this.data.value);
     const validate = ajv.compile(this.schema);

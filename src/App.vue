@@ -58,7 +58,7 @@
         </div>        
         <div>
             <!-- with list -->
-            <div class="fieldblock">
+            <!-- <div class="fieldblock">
                 <h3>SimpleAppSelect</h3>
                 <SimpleAppSelect  :setting="o.getField(fGender)" optionValue="gendervalue" optionLabel="name" v-model="data.gender" description="list from jsonschema 'oneOf'"></SimpleAppSelect>
                 <SimpleAppSelect  label="Pick Gender" :setting="o.getField(fGender)" :options="genderlist" v-model="data.gender" description="define list manually"></SimpleAppSelect>                
@@ -87,24 +87,24 @@
                 <h3>SimpleAppListmulti</h3>                    
                 <SimpleAppListmulti  :setting="o.getField(fSubscribed)"  v-model="data.subscribed" description="list from jsonschema enum"></SimpleAppListmulti>
                 <small class="special-comment">* Configuration similar with SimpleAppSelectMulti.</small>
-            </div>
+            </div> -->
             
             <div class="fieldblock">
-                <h3>Remote Autocomplete (single)</h3>
+                <h3>Remote Autocomplete (single)</h3>{{ data }}
                 <SimpleAppAutocomplete  :setting="o.getField(fSalesAgent)" 
-                        optionValue="value"  optionLabel="name" v-model="data.salesagent"
+                        :optionLabel="autocompletelabel" v-model="data.salesagent"
                         @complete="search" :suggestions="autocompleteoptions"
                         />
                 
             </div>
-            <div class="fieldblock">
+            <!-- <div class="fieldblock">
                 <h3>Remote Autocomplete (multiple)</h3>
                 <SimpleAppAutocompletemulti  :setting="o.getField(fKids)" 
                         optionLabel="name" v-model="data.kids"
                         @complete="searchKids" :suggestions="autocompletekids"
                         />
             </div>
-            
+             -->
             
                    
         </div>
@@ -155,7 +155,7 @@ import SimpleAppList from './components/SimpleAppList.vue'
 import SimpleAppListmulti from './components/SimpleAppListmulti.vue'
 import SimpleAppDatatable from './components/SimpleAppDatatable.vue'
 
-
+const autocompletelabel='label'
 const errmsg = ref<any>()
 const msg = ref<any>()
 const person = new PersonDoc()
@@ -212,7 +212,10 @@ const search = (e:any)=>{
     console.log(e)
     let list:any[] = []
     for(let i=0;i<10;i++){
-        list.push({id:i,name: `${e.query}-${i}`})
+        let tmp:any={}
+        tmp['id']=i
+        tmp[autocompletelabel]=`${e.query}-${i}`
+        list.push(tmp)
         //
     }
     autocompleteoptions.value=list

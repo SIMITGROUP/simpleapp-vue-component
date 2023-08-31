@@ -38,7 +38,7 @@ const selecteditem=ref(modelValue.value)
 if(props.setting.fieldsetting && props.setting.fieldsetting.format){    
     const formatarr=props.setting.fieldsetting.format.split(':')    
 }
-
+watch(modelValue,(newvalue)=>selecteditem.value=newvalue)
 const deleteValue = (event:any)=>{
     modelValue.value = selecteditem.value
     console.log(selecteditem.value)

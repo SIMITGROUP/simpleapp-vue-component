@@ -11,6 +11,9 @@ import type { JSONSchema7,JSONSchema7Definition } from 'json-schema';
         title?:string,
         document: SimpleAppClient<any,any>
     }>()
+    if(!props.document){
+        throw "undefine SimpleAppForm property 'document'"
+    }
     // const obj = {schema:props.schema,data: props.schema}
     const getField = (path:string)=>{
         // console.log("simpleform topath",path)
