@@ -1,9 +1,8 @@
 <template>
     <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
        
-        <div v-if="listApi">
-            listapi
-        <AutoComplete  
+        
+        <AutoComplete  v-if="listApi"
         class="simpleapp-inputfield"
         :inputId="slotprops.uuid"   
         v-model="selecteditem"
@@ -16,12 +15,9 @@
         :suggestions="list"
         forceSelection
         dropdown
-          /> 
-        </div>
-        
-        <div v-else    >
-            no listapi
-        <AutoComplete 
+          />         
+    
+        <AutoComplete v-else 
         class="simpleapp-inputfield"
         :inputId="slotprops.uuid"   
         v-model="selecteditem"
@@ -33,7 +29,7 @@
         forceSelection
         dropdown
           />      
-        </div>    
+          
     </FieldContainer>
 </template>
 <script lang="ts" setup>
