@@ -1,6 +1,8 @@
 <template>
-    <slot name="header"><h3>{{ title }}</h3></slot>
-    <slot  name="default" :data="document.getData()" :getField="getField"></slot>
+    <form onsubmit="return false">
+        <slot name="header"><h3>{{ title }}</h3></slot>
+        <slot  name="default" :data="document.getData()" :getField="getField"></slot>
+    </form>
 </template>
 <script setup lang="ts" >
 import type {SimpleAppFieldSetting} from '../type'    

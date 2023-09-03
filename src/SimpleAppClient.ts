@@ -50,7 +50,7 @@ export class SimpleAppClient<
   async getById(id: string) {
     return await this.docapi.runFindOne(id,{timeout:this.defaultTimeOut})
     .then((res: AxiosResponse) => {
-      if(this.event){this.event('success:getById',res.data)}
+      if(this.event){this.event('info:getById',res.data)}
       Object.assign(this.data.value, res.data);
       return res;
     }).catch((res:any)=>{

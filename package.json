@@ -1,6 +1,6 @@
 {
   "name": "@simitgroup/simpleapp-vue-component",
-  "version": "1.0.34",
+  "version": "1.0.37",
   "private": false,
   "type": "module",
   "scripts": {
