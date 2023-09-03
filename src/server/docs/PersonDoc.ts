@@ -74,7 +74,7 @@ export class PersonDoc extends SimpleAppClient<Person, PERSONApi> {
   constructor() {
     const apiconfig = new Configuration({ basePath: 'http://localhost:8000' });
     const apiobj = new PERSONApi(apiconfig);
-    super(apiobj);
+    super(apiobj,'pes','person');
 
     this.setNew();
   }
