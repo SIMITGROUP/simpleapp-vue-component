@@ -2,7 +2,7 @@
   <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
      
   <div v-if="componentErr!=''" class="input-error">{{componentErr}}</div>
-  <AutoComplete v-else 
+  <AutoComplete v-else
       class="simpleapp-inputfield"
       :inputId="slotprops.uuid"   
       v-model="selecteditem"
@@ -58,18 +58,15 @@ if(!selecteditem.value[labelfield]){
   selecteditem.value[labelfield]=''
 }
 
-const getListFromAutocompleteApi = ((event:any)=>{    
+const getListFromAutocompleteApi =  (event:any)=>{    
   const keyword = event.query??''  
-  if(!props.remoteSrc.autoComplete){
-      console.error("'remoteSrc' require openapi object check support 'obj.autoComplete(keyword)'")
-  }else{    
-      props.remoteSrc.autoComplete(keyword).then((res:any)=>{
+  const remoteSrc =  props.remoteSrc
+  remoteSrc.autoComplete(keyword).then((res:any)=>{
           list.value = res.data                   
       }).catch((res:any)=>{
           console.error(res)
-      })    
-  }
-})
+      })
+}
 
 watch(modelValue,(newvalue:autocompletetype)=>{
   selecteditem.value=newvalue
@@ -80,7 +77,7 @@ watch(modelValue,(newvalue:autocompletetype)=>{
 
 if(fieldsetting['x-foreignkey'] == 'undefined'){
   componentErr.value='undefine "x-foreignkey" of this field in jsonschema'
-}else if(typeof props['remoteSrc'] == 'undefined' || !props['remoteSrc']['autoComplete']){
+}else if( !props['remoteSrc'] || !props['remoteSrc']['autoComplete']){
   componentErr.value='invalid property "remoteSrc" cause props.remoteSrc.autoComplete(keyword:string) does not exists)'
 }else{
   componentErr.value=''

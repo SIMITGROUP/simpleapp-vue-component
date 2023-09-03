@@ -54,7 +54,8 @@ export class SimpleAppClient<
       Object.assign(this.data.value, res.data);
       return res;
     }).catch((res:any)=>{
-      if(this.event){this.event('error:getById',res);return res}
+      if(this.event){this.event('error:getById',res)}
+      return Promise.reject(res)
     });
   }
   async create() {
@@ -72,7 +73,7 @@ export class SimpleAppClient<
         }).catch((errors:any)=>{
           if(this.event){this.event('error:create',errors)}
           console.error(errors)
-          return errors
+          return Promise.reject(errors)
         });
     }
   }
@@ -92,6 +93,7 @@ export class SimpleAppClient<
         }).catch((errors:any)=>{
           if(this.event){this.event('error:update',errors)}
           console.error(errors)
+          return Promise.reject(errors)
         });
     }
   }
@@ -99,11 +101,11 @@ export class SimpleAppClient<
     return await this.docapi.runDelete(id,{timeout:this.defaultTimeOut})
       .then((res:AxiosResponse)=>{
         if(this.event){this.event('success:delete',res.data)}
-        return res.data
+        return Promise.resolve(res.data)
       }).catch((errors:any)=>{
         if(this.event){this.event('error:delete',errors)}
         console.error(errors)
-        return errors
+        return Promise.reject(errors)
       });
   }
   async list() {
@@ -156,4 +158,5 @@ export class SimpleAppClient<
       return false;
     }
   }
+
 }
