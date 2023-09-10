@@ -126,12 +126,15 @@ export class SimpleAppClient<
   validateFailed() {
     const ajv = new Ajv({ allErrors: true });
     addFormats(ajv);
-    ajv.addFormat('field-autocomplete-code', /.*$/)
-    ajv.addFormat('field-autocomplete-name', /.*$/)
+    ajv.addFormat('x-document-no', /.*$/);
+    ajv.addFormat('x-document-name', /.*$/);
+    ajv.addFormat('x-text',/.*$/)
+    ajv.addFormat('x-html',/.*$/)
     ajv.addKeyword({
-      keyword:'x-foreignkey',
-      type:'string'
+      keyword: 'x-foreignkey',
+      type: 'string',
     });
+
     this.errorlist.value = {};
     this.hook('pre-validation', this.data.value);
     const validate = ajv.compile(this.schema);

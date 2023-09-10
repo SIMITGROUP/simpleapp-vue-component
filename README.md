@@ -47,6 +47,14 @@ const data = person.getReactiveData()
 21.SimpleAppReaonly Value, or container of parent object
 22.SimpleAppField Container
 
+supported format:
+ajv
+addon:
+    field-autocomplete-code
+    field-autocomplete-name
+    x-text
+    x-html
+    x-foreignkey
 
 # todo
 1. currently validation error only can capture at top level, need way to allocate path instance into nested fields, or array
