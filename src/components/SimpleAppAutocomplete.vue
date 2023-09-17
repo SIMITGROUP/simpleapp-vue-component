@@ -14,7 +14,7 @@
       @complete="getListFromAutocompleteApi"
       :suggestions="list"
       forceSelection
-      dropdown
+      
         />       
         
   </FieldContainer>

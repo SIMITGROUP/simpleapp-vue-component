@@ -11,7 +11,7 @@
         @item-select="pickValue"
         forceSelection
         multiple
-        dropdown
+        
           />          
     </FieldContainer>
 </template>
