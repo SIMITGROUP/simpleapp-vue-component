@@ -1,6 +1,6 @@
 
 <template>
-    <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :error="error" #default="slotprops">
+    <FieldContainer v-bind="$attrs" v-model="modelValue" :label="label" :description="description" :setting="setting" :error="error" #default="slotprops">
         <Chips class="simpleapp-inputfield simpleapp-inputchip"
             v-model="modelValue"    
             :inputId="slotprops.uuid"

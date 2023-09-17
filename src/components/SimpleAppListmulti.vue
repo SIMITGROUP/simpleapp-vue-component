@@ -1,6 +1,6 @@
 
 <template>
-    <FieldContainer v-bind="$attrs" :refto="id" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
+    <FieldContainer v-bind="$attrs" :refto="id" v-model="modelValue" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
         <Listbox v-model="modelValue" 
             class="simpleapp-inputfield"
             :id="slotprops.uuid"   

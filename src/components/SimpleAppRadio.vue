@@ -1,6 +1,7 @@
 
 <template>
     <FieldContainer v-bind="$attrs"
+    v-model="modelValue"
      :label="label"
     :description="description" 
      :setting="setting" 

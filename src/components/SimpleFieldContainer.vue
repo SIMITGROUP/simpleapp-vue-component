@@ -1,34 +1,53 @@
 <template>
-    <div v-if="schema" class="simpleapp-input-container">
+    <div v-if="schema" :class="fieldcontainerclass">          
         <div v-if="hidelabel"></div>
-        <label v-else  :for="uuid">{{ fieldlabel }} <span v-if="props.setting.isrequired && fieldlabel" class="input-error">*</span></label>
-        <slot name="default" :uuid="uuid"></slot>
+        <label v-else  :for="uuid">{{ fieldlabel }} <span v-if="props.setting.isrequired && fieldlabel" class="input-error">*</span></label>        
+        
+        
+        <div v-if="readonly && typeof modelValue =='object' && typeof modelValue['_id']!='undefined' && typeof modelValue['label']!='undefined' " :uuid="uuid" class="simpleapp-value-readonly">{{ modelValue['label'] }}</div>
+        <div v-else-if="readonly" :uuid="uuid" class="simpleapp-value-readonly">{{ modelValue }}</div>
+        <slot v-else name="default" :uuid="uuid"></slot>
+
         <small v-if="error" class="input-error">{{ error }}</small>
         <small v-else class="input-desc">{{ fielddesc }}</small>
     </div>
-    <div v-else class="simpleapp-input-container">
+    <div v-else :class="defaultcssclass">
         <label class="input-error">wrong path in getField()</label>
         <div class="input-error">{{ props.setting.path }}</div>
     </div>
 </template>
 <script setup lang="ts">
-import {computed,watch} from 'vue'
+import SimpleAppValue from './SimpleAppValue.vue'
+import {camelCaseToWords} from '../helper'
+import {computed,setBlockTracking,watch} from 'vue'
 import {v4 as uuidv4} from 'uuid';
 import {ref} from 'vue'
 const uuid =  uuidv4();
 const fieldlabel = ref('')
 const fielddesc = ref('')
+const defaultcssclass='simpleapp-input-container'
+const fieldcontainerclass = ref(defaultcssclass)
 let instancepath = ref('')
 const props = defineProps<{
     label?: string,    
     description?: string,
     instancepath?:string,
     hidelabel?:boolean,
+    readonly?:boolean
     // error?:string,
     setting:any
 }>()
 
-// console.log('props.setting',props.setting.fieldsetting)
+const readonly = ref(false)
+if(props.readonly !== undefined){
+    readonly.value=props.readonly
+}else if(props.setting.readonly !==undefined){
+    readonly.value=props.readonly
+}
+// console.log("props.setting.format",props.setting.format)
+const modelValue = defineModel()
+const readonlyclass="simpleapp-value-readonly"
+// console.log('props.setting',modelValue.value,props.setting)
 let schema:any 
 if(props.setting.fieldsetting && props.setting.fieldsetting.type){
     
@@ -52,10 +71,6 @@ if(props.setting.fieldsetting && props.setting.fieldsetting.type){
    
 
 }
-function camelCaseToWords(s: string) {
-  const result = s.replace(/([A-Z])/g, ' $1');
-  return result.charAt(0).toUpperCase() + result.slice(1);
-}
 const errormsg = computed(()=>{
     
     props.setting.errors[instancepath.value]
@@ -69,9 +84,10 @@ watch(props.setting.errors,(newvalue,oldvalue)=>{
         for(let i=0;i<errlist.length;i++){
             error.value += errlist[i].message +','
         }
-        
+        fieldcontainerclass.value=defaultcssclass + ' input-error'
     }else{
         error.value=''
+        fieldcontainerclass.value=defaultcssclass
     }
     // console.log("validation result",props.setting.instancepath,)
     // error.value = newvalue[props.setting.instancepath].message

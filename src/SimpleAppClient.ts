@@ -1,6 +1,7 @@
 
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
+import addErrors from 'ajv-errors';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
 import type { AxiosResponse } from 'axios';
@@ -126,8 +127,10 @@ export class SimpleAppClient<
   validateFailed() {
     const ajv = new Ajv({ allErrors: true });
     addFormats(ajv);
+    addErrors(ajv)
     ajv.addFormat('x-document-no', /.*$/);
     ajv.addFormat('x-document-name', /.*$/);
+    ajv.addFormat('tel',/^$|^\d{7,15}$/gm)    
     ajv.addFormat('x-text',/.*$/)
     ajv.addFormat('x-html',/.*$/)
     ajv.addKeyword({
@@ -155,7 +158,8 @@ export class SimpleAppClient<
       this.errorlist.value = tmp;
       // console.error(this.errorlist);
 
-      return validate.errors;
+      // return validate.errors;
+      return ajv.errors??validate.errors;
     } else {
       this.hook('post-validation', this.data.value);
       return false;

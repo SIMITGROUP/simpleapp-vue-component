@@ -1,5 +1,5 @@
 <template>
-    <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :error="error"  #default="slotprops">
+    <FieldContainer v-bind="$attrs" v-model="modelValue" :label="label" :description="description" :setting="setting" :error="error"  #default="slotprops">
     <Calendar
      v-model="datedata"  
      :inputId="slotprops.uuid"
@@ -18,17 +18,16 @@ import Calendar from 'primevue/calendar';
 
 const x = new Date()
 const date = ref<Date>()
-const emit = defineEmits(['update:modelValue'])
+// const emit = defineEmits(['update:modelValue'])
 const props = defineProps<{
     label?:string,
     id?:string,
     description?:string,
     setting?:any,
     error?:string,
-    modelValue:string
 }>()
-
-
+const modelValue = defineModel<string>()
+const emit = defineEmits(['update:modelValue'])
 const getDateFormat=():string=>{
     // const date = new Date();
     const date = new Date();
@@ -41,11 +40,12 @@ const getDateFormat=():string=>{
     const dateformat = datestr.replace(year,'yy').replace(month,'mm').replace(day,'dd');
     return  dateformat
 }
-
+const datestr:string = modelValue.value??''
+const datedefaultdata = new Date(datestr)
 const dateformat = computed(()=> getDateFormat())
-const datedata = ref(new Date(props.modelValue))
+const datedata = ref(datedefaultdata)
 watch(props,(newvalue)=>{    
-    datedata.value =  new Date(newvalue.modelValue)
+    datedata.value =  new Date(datedefaultdata)
 })
 
 const change = (e:Date)=>{

@@ -1,5 +1,5 @@
 <template>
-    <FieldContainer v-bind="$attrs" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
+    <FieldContainer v-bind="$attrs" v-model="modelValue" :label="label" :description="description" :setting="setting" :instancepath="instancepath" :error="error" #default="slotprops">        
         <AutoComplete         
         class="simpleapp-inputfield"
         :inputId="slotprops.uuid"   

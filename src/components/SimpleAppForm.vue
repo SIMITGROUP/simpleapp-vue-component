@@ -12,6 +12,7 @@ import type { JSONSchema7,JSONSchema7Definition } from 'json-schema';
     const props = defineProps<{
         title?:string,
         document: SimpleAppClient<any,any>
+        readonly?:boolean
     }>()
     if(!props.document){
         throw "undefine SimpleAppForm property 'document'"
@@ -33,7 +34,8 @@ import type { JSONSchema7,JSONSchema7Definition } from 'json-schema';
             apiObj:props.document.getApi(),
             modelField: 'email',
             isrequired: getIsRequired(schema,path),
-            errors: props.document.getErrors()
+            errors: props.document.getErrors(),
+            readonly: props.readonly
         } as SimpleAppFieldSetting
     }
 

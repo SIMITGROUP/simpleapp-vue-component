@@ -65,3 +65,19 @@ addon:
 6. error handles from remote not yet bind back
 7. errors need toast or what. sometimes hidden component error
 
+
+## simpleapptable todo
+1. auto define capital letter title from field
+2. allow input inline record easily
+3. allow input with popup
+4. allow search record
+5. support i18n
+6. support nested fields like name.firstname
+7. able to bind instancePath
+
+## select/multiselect
+need full qc again
+
+## autocomplete/autocompletemultiple
+need full qc again
+
