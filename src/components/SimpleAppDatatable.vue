@@ -1,5 +1,6 @@
 <template>
-    <DataTable v-bind="$attrs" class="simpleapp-datatable" :value="valueModel">
+    <DataTable v-bind="$attrs" class="simpleapp-datatable" stripedRows :value="valueModel">
+        <template #empty> <div class="text-center">No record found.</div> </template>
         <Column v-for="(col,index) in columns" :field="col" :header="camelCaseToWords(col)"></Column>            
     </DataTable>
 </template>

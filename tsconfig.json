@@ -1,5 +1,8 @@
 {
   "files": [],
+  "exclude": [
+    "node_modules" , "./dist" , "./tools"
+ ],
   "references": [
     {
       "path": "./tsconfig.node.json"

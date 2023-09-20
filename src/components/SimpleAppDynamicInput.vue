@@ -6,8 +6,9 @@ import SimpleAppSelect from './SimpleAppSelect.vue';
 import type {JSONSchema7} from 'json-schema'
 import {watch} from 'vue'
 import SimpleAppTextarea from './SimpleAppTextarea.vue';
+import SimpleAppCheckbox from './SimpleAppCheckbox.vue';
 
-const props = defineProps<{setting:SimpleAppFieldSetting, getAutocomplete:Function}>()
+const props = defineProps<{setting:SimpleAppFieldSetting, getAutocomplete:Function, hidelabel?:boolean}>()
 interface customSchema extends JSONSchema7  {
     'x-foreignkey'?:string
 }
@@ -17,11 +18,12 @@ const f:any = props.setting.fieldsetting
 const modelValue = defineModel()
 </script>
 <template>    
-    <SimpleAppAutocomplete v-if="f['x-foreignkey']" v-model="modelValue" :setting="props.setting" :hidelabel="true" :remote-src="getAutocomplete(f['x-foreignkey'])" optionLabel="label"/>
-    <SimpleAppNumber v-else-if="f.type=='number' || f.type=='integer'" v-model="modelValue" :setting="props.setting"  :hidelabel="true"></SimpleAppNumber>
-    <SimpleAppSelect v-else-if="f.enum" v-model="modelValue" :setting="props.setting"  :hidelabel="true"></SimpleAppSelect>
-    <SimpleAppChip v-else-if="f.type=='array' && f.items && f.items.type=='string'" v-model="modelValue" :setting="props.setting"  :hidelabel="true"></SimpleAppChip>
-    <SimpleAppTextarea v-else-if="f.type=='string' && f.format=='x-text'" v-model="modelValue" :setting="props.setting"  :hidelabel="true"></SimpleAppTextarea>
-    <SimpleAppText v-else-if="f.type=='string' && f.format" :type="f.format" v-model="modelValue" :setting="props.setting"  :hidelabel="true"></SimpleAppText>
-    <SimpleAppText v-else v-model="modelValue" :setting="props.setting"  :hidelabel="true"></SimpleAppText>
+    <SimpleAppAutocomplete v-if="f['x-foreignkey']" v-model="modelValue" :setting="props.setting" :hidelabel="hidelabel" :remote-src="getAutocomplete(f['x-foreignkey'])" optionLabel="label"/>
+    <SimpleAppCheckbox v-else-if="f.type=='boolean'" v-model="modelValue" :setting="props.setting"  :hidelabel="hidelabel"/>
+    <SimpleAppNumber v-else-if="f.type=='number' || f.type=='integer'" v-model="modelValue" :setting="props.setting"  :hidelabel="hidelabel"></SimpleAppNumber>
+    <SimpleAppSelect v-else-if="f.enum" v-model="modelValue" :setting="props.setting"  :hidelabel="hidelabel"></SimpleAppSelect>
+    <SimpleAppChip v-else-if="f.type=='array' && f.items && f.items.type=='string'" v-model="modelValue" :setting="props.setting"  :hidelabel="hidelabel"></SimpleAppChip>
+    <SimpleAppTextarea v-else-if="f.type=='string' && f.format=='x-text'" v-model="modelValue" :setting="props.setting"  :hidelabel="hidelabel"></SimpleAppTextarea>
+    <SimpleAppText v-else-if="f.type=='string' && f.format" :type="f.format" v-model="modelValue" :setting="props.setting"  :hidelabel="hidelabel"></SimpleAppText>
+    <SimpleAppText v-else v-model="modelValue" :setting="props.setting"  :hidelabel="hidelabel"></SimpleAppText>
 </template>

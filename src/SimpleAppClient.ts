@@ -129,14 +129,20 @@ export class SimpleAppClient<
     addFormats(ajv);
     addErrors(ajv)
     ajv.addFormat('x-document-no', /.*$/);
-    ajv.addFormat('x-document-name', /.*$/);
+    ajv.addFormat('x-document-label', /.*$/);
     ajv.addFormat('tel',/^$|^\d{7,15}$/gm)    
     ajv.addFormat('x-text',/.*$/)
     ajv.addFormat('x-html',/.*$/)
-    ajv.addKeyword({
-      keyword: 'x-foreignkey',
-      type: 'string',
-    });
+    
+    ajv.addKeyword({keyword: 'x-document-status',type: 'array',});
+    ajv.addKeyword({keyword: 'x-document-api',type: 'array',});
+    ajv.addKeyword({keyword: 'x-ignore-autocomplete',type: 'boolean',});
+    ajv.addKeyword({keyword: 'x-isolation-type',type: 'string',});
+    ajv.addKeyword({keyword: 'x-document-type',type: 'string',});
+    ajv.addKeyword({keyword: 'x-document-name',type: 'string',});
+    ajv.addKeyword({keyword: 'x-collection-name',type: 'string',});    
+    ajv.addKeyword({keyword:'x-autocomplete-field',type:'boolean'})    
+    ajv.addKeyword({keyword: 'x-foreignkey',type: 'string',});
 
     this.errorlist.value = {};
     this.hook('pre-validation', this.data.value);
