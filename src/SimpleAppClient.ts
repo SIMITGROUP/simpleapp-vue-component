@@ -131,12 +131,13 @@ export class SimpleAppClient<
     const ajv = new Ajv({ allErrors: true });
     addFormats(ajv);
     addErrors(ajv)
-    ajv.addFormat('x-document-no', /.*$/);
-    ajv.addFormat('x-document-label', /.*$/);
+    
     ajv.addFormat('tel',/^$|^\d{7,15}$/gm)    
     ajv.addFormat('x-text',/.*$/)
     ajv.addFormat('x-html',/.*$/)
     
+    ajv.addKeyword({ keyword: 'x-document-no', type: 'boolean'});
+    ajv.addKeyword({ keyword: 'x-document-label', type: 'boolean'});    
     ajv.addKeyword({keyword: 'x-document-status',type: 'array',});
     ajv.addKeyword({keyword: 'x-document-api',type: 'array',});
     ajv.addKeyword({keyword: 'x-ignore-autocomplete',type: 'boolean',});
