@@ -72,8 +72,9 @@ export class SimpleAppClient<
           this.data.value = { ...res.data };
           return res;
         }).catch((errors:any)=>{
-          if(this.event){this.event('error:create',errors)}
-          console.error(errors)
+          if(this.event){
+            this.event('error:create',errors.response.data.data)}
+            console.error('error:create',errors.response.data.data)
           return Promise.reject(errors)
         });
     }
@@ -92,8 +93,10 @@ export class SimpleAppClient<
           if(this.event){this.event('success:update',res.data)}
           return res.data;
         }).catch((errors:any)=>{
-          if(this.event){this.event('error:update',errors)}
-          console.error(errors)
+          // console.error('error:update---',errors,",---",errors.message)
+          if(this.event){
+          this.event('error:update',errors.response.data.data)}
+          console.error('error:update',errors.response.data.data)
           return Promise.reject(errors)
         });
     }
@@ -104,8 +107,8 @@ export class SimpleAppClient<
         if(this.event){this.event('success:delete',res.data)}
         return Promise.resolve(res.data)
       }).catch((errors:any)=>{
-        if(this.event){this.event('error:delete',errors)}
-        console.error(errors)
+        if(this.event){this.event('error:delete',errors.response.data.data)}
+        console.error(errors.response.data.data)
         return Promise.reject(errors)
       });
   }
@@ -114,9 +117,9 @@ export class SimpleAppClient<
         .then((res:AxiosResponse)=>{
           if(this.event){this.event('info:listready',res.data);}
           return res.data
-        }).catch((res:any)=>{
-          if(this.event){this.event('error:list',res)}
-          return res
+        }).catch((errors:any)=>{
+          if(this.event){this.event('error:list',errors.response.data.data)}
+          return Promise.reject(errors)
         });
   }
   find() {}

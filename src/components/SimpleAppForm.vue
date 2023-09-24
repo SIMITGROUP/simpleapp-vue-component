@@ -1,5 +1,5 @@
 <template>
-    <form onsubmit="return false">
+    <form class="simpleapp-form" onsubmit="return false">
         <slot name="header"><h3>{{ title }}</h3></slot>
         <slot  name="default" :data="document.getData()" :getField="getField"></slot>
     </form>
@@ -31,6 +31,7 @@ import type { JSONSchema7,JSONSchema7Definition } from 'json-schema';
             instancepath: getInstancePath(schema,path),
             fieldsetting: fieldsetting,
             modelObject: data,
+            document: props.document,
             apiObj:props.document.getApi(),
             modelField: 'email',
             isrequired: getIsRequired(schema,path),
